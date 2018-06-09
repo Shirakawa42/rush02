@@ -7,14 +7,14 @@ void	manage_term_inputs(void)
 
 	if ((c = getch()) != ERR)
 	{
-		_log << "key '" << (long)c << "'' pressed" << std::endl;
+		_log << "key '" << static_cast<long>(c) << "'' pressed" << std::endl;
 		switch (c)
 		{
 			case 27:
 				exit(1);
 				break ;
 			default:
-				_log << "key '" << (long)c << "' not handled" << std::endl;
+				_log << "key '" << static_cast<long>(c) << "' not handled" << std::endl;
 				break;
 		}
 	}

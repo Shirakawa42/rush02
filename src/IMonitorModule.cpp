@@ -7,7 +7,18 @@ IMonitorModule::IMonitorModule(void)
 
 IMonitorModule::IMonitorModule(const IMonitorModule &b)
 {
-	(void)b;
+	setX(b.getX());
+	setY(b.getY());
+	setWidth(b.getWidth());
+	setHeight(b.getHeight());
+}
+
+IMonitorModule::IMonitorModule(int x, int y, int width, int height)
+{
+	_x = x;
+	_y = y;
+	_width = width;
+	_height = height;
 }
 
 IMonitorModule::~IMonitorModule(void)
@@ -16,7 +27,10 @@ IMonitorModule::~IMonitorModule(void)
 
 IMonitorModule	&IMonitorModule::operator=(const IMonitorModule &b)
 {
-	(void)b;
+	setX(b.getX());
+	setY(b.getY());
+	setWidth(b.getWidth());
+	setHeight(b.getHeight());
 	return (*this);
 }
 
@@ -24,12 +38,42 @@ void	IMonitorModule::drawTerm(Terminal &terminal) const
 {
 	for (int x = _x; x < _x + _width; x++)
 		for (int y = _y; y < _y + _height; y++)
-			terminal.print('O', x, y);
+			terminal.print(x, y, COLOR_RESET, 'O');
 }
 
 void	IMonitorModule::drawWin(Window &window) const
 {
 	(void)window;
+}
+
+void	IMonitorModule::printText(Terminal &terminal, const std::string &s, int x, int y) const
+{
+	std::string	out;
+
+	if (x >= 0 && x < _width &&
+		y >= 0 && y < _height)
+	{
+		out = s;
+		if (x + static_cast<int>(s.length()) > _width)
+		{
+			out.resize(_width - y);
+			if (out.length() <= 3)
+			{
+				for (size_t i = 0; i < out.length(); i++)
+					out[i] = '.';
+			}
+			else
+			{
+				out.pop_back();
+				out.pop_back();
+				out.pop_back();
+				out.push_back('.');
+				out.push_back('.');
+				out.push_back('.');
+			}
+		}
+		terminal.print(x, y, COLOR_RESET, out);
+	}
 }
 
 void	IMonitorModule::setWidth(int width)

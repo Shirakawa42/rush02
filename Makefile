@@ -6,24 +6,24 @@
 #    By: pribault <pribault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/09 10:39:10 by pribault          #+#    #+#              #
-#    Updated: 2018/06/09 15:46:31 by pribault         ###   ########.fr        #
+#    Updated: 2018/06/09 17:17:47 by pribault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # **************************************************************************** #
 
 NAME =	ft_gkrellm
 CC =	clang++
-FLAGS =	-Wall -Wextra -Werror
+FLAGS =	-Wall -Wextra -Werror -std=c++98
 
 SRC_DIR =	src
 OBJ_DIR =	.obj
 INC_DIR =	include
 
 SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp TerminalMonitor.cpp\
-		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp
+		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp CpuModule.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
 INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
-		Window.hpp Log.hpp TerminalMonitor.hpp
+		Window.hpp Log.hpp TerminalMonitor.hpp CpuModule.hpp
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
 .PHONY: all clean fclean re sdl2

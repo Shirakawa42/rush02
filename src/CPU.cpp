@@ -1,6 +1,8 @@
 #include "CPU.hpp"
 #include <sys/sysctl.h>
 
+CPU cpu;
+
 CPU::CPU()
 {
 	setName();

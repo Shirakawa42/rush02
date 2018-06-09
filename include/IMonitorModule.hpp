@@ -9,12 +9,15 @@ class	IMonitorModule
 	public:
 		IMonitorModule(void);
 		IMonitorModule(const IMonitorModule &b);
+		IMonitorModule(int x, int y, int width, int height);
 		~IMonitorModule(void);
 
 		virtual	IMonitorModule	&operator=(const IMonitorModule &b);
 
 		virtual void	drawTerm(Terminal &terminal) const;
 		virtual void	drawWin(Window &window) const;
+
+		void			printText(Terminal &terminal, const std::string &s, int x, int y) const;
 
 		void	setWidth(int width);
 		void	setHeight(int height);

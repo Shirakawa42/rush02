@@ -33,8 +33,8 @@ class	CPU
 	private:
 		float				CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
 		float				GetCPULoad(void);
-		unsigned long long	_previousTotalTicks = 0;
-		unsigned long long	_previousIdleTicks = 0;
+		unsigned long long	_previousTotalTicks;
+		unsigned long long	_previousIdleTicks;
 		size_t				_current_frequency;
 		size_t				_max_frequency;
 		std::string			_name;
@@ -42,5 +42,7 @@ class	CPU
 		size_t				_number_of_cores;
 		size_t				_memory_size;
 };
+
+extern CPU	cpu;
 
 #endif

@@ -4,7 +4,7 @@
 # include "IMonitorDisplay.hpp"
 # include "Terminal.hpp"
 
-class	TerminalMonitor : public IMonitorDisplay
+class	TerminalMonitor : virtual public IMonitorDisplay
 {
 	public:
 		TerminalMonitor(void);
@@ -12,6 +12,8 @@ class	TerminalMonitor : public IMonitorDisplay
 		~TerminalMonitor(void);
 
 		IMonitorDisplay	&operator=(const IMonitorDisplay &b);
+
+		Terminal	&getTerm(void);
 
 		void	draw(const IMonitorModule &module);
 		void	render(void);
