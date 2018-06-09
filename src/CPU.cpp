@@ -25,10 +25,7 @@ CPU &	CPU::operator = ( const CPU & cpy )
 	return *this;
 }
 
-static unsigned long long _previousTotalTicks = 0;
-static unsigned long long _previousIdleTicks = 0;
-
-float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks)
+float	CPU::CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks)
 {
 	unsigned long long totalTicksSinceLastTime = totalTicks - _previousTotalTicks;
 	unsigned long long idleTicksSinceLastTime  = idleTicks - _previousIdleTicks;
@@ -38,7 +35,7 @@ float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTic
 	return ret;
 }
 
-float GetCPULoad()
+float	CPU::GetCPULoad()
 {
 	host_cpu_load_info_data_t cpuinfo;
 	mach_msg_type_number_t count = HOST_CPU_LOAD_INFO_COUNT;
@@ -48,7 +45,8 @@ float GetCPULoad()
 		for(int i=0; i<CPU_STATE_MAX; i++) totalTicks += cpuinfo.cpu_ticks[i];
 		return CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks);
 	}
-	else return -1.0f;
+	else
+		return -1.0f;
 }
 
 void		CPU::setCurrentFrequency(void)

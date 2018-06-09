@@ -31,12 +31,16 @@ class	CPU
 		size_t		getMemorySize(void);
 
 	private:
-		size_t		_current_frequency;
-		size_t		_max_frequency;
-		std::string	_name;
-		float		_current_usage;
-		size_t		_number_of_cores;
-		size_t		_memory_size;
+		float				CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
+		float				GetCPULoad(void);
+		unsigned long long	_previousTotalTicks = 0;
+		unsigned long long	_previousIdleTicks = 0;
+		size_t				_current_frequency;
+		size_t				_max_frequency;
+		std::string			_name;
+		float				_current_usage;
+		size_t				_number_of_cores;
+		size_t				_memory_size;
 };
 
 #endif
