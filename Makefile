@@ -6,7 +6,7 @@
 #    By: pribault <pribault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/09 10:39:10 by pribault          #+#    #+#              #
-#    Updated: 2018/06/09 12:31:27 by pribault         ###   ########.fr        #
+#    Updated: 2018/06/09 15:32:29 by pribault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,11 @@ SRC_DIR =	src
 OBJ_DIR =	.obj
 INC_DIR =	include
 
-SRC =	ft_gkrellm.cpp Terminal.cpp Window.cpp Log.cpp
+SRC =	ft_gkrellm.cpp Terminal.cpp Window.cpp Log.cpp TerminalMonitor.cpp\
+		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
 INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
-		Window.hpp Log.hpp
+		Window.hpp Log.hpp TerminalMonitor.hpp
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
 .PHONY: all clean fclean re sdl2

@@ -1,18 +1,54 @@
-#include <mach/mach_init.h>
-#include <mach/mach_error.h>
-#include <mach/mach_host.h>
-#include <mach/vm_map.h>
 #include "ft_gkrellm.hpp"
-#include <sys/sysctl.h>
 #include <iostream>
+#include <signal.h>
 
-int	main(void)
+TerminalMonitor	term;
+
+void	print_usage(void)
 {
-	host_cpu_load_info_data_t	cpuinfo;
-	mach_msg_type_number_t		count = HOST_CPU_LOAD_INFO_COUNT;
-	// Terminal					term;
+	std::cerr << "./ft_gkrellm [-term | -win]" << std::endl;
+	exit(EXIT_FAILURE);
+}
 
-	host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count);
-	std::cout << cpuinfo.cpu_ticks[CPU_STATE_IDLE] << std::endl;
+void	clean_exit(void)
+{
+	exit(EXIT_SUCCESS);
+}
+
+void	terminal(void)
+{
+	while (true)
+	{
+		manage_term_inputs();
+	}
+}
+
+void	windowed(void)
+{
+}
+
+int	main(int argc, char **argv)
+{
+	signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
+	if (argc == 1)
+		terminal();
+	else if (argc == 2)
+	{
+		std::string	arg(argv[1]);
+
+		if (arg == "-help" || arg == "-h" || arg == "--help")
+			print_usage();
+		if (arg == "-term")
+			terminal();
+		else if (arg == "-win")
+			windowed();
+		else
+		{
+			std::cerr << "invalid arg '" << arg << "', allowed: -term -win" << std::endl;
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+		print_usage();
 	return (0);
 }
