@@ -46,8 +46,8 @@ void	renderRect(void)
 
 	r.x = 50;
 	r.y = 50;
-	r.w = 50;
-	r.h = 50;
+	r.w = 200;
+	r.h = 200;
 	SDL_RenderClear(s.renderer);
 	SDL_SetRenderDrawColor(s.renderer, 255, 0, 255, 255);
 	SDL_RenderFillRect(s.renderer, &r);
