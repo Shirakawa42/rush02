@@ -13,17 +13,17 @@
 
 NAME =	ft_gkrellm
 CC =	clang++
-FLAGS =	-Wall -Wextra -Werror
+FLAGS =	#-Wall -Wextra -Werror
 
 SRC_DIR =	src
 OBJ_DIR =	.obj
 INC_DIR =	include
 
-SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp TerminalMonitor.cpp\
+SRC =	main.cpp Terminal.cpp Window.cpp CPU.cpp TerminalMonitor.cpp\
 		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
 INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
-		Window.hpp Log.hpp TerminalMonitor.hpp
+		Window.hpp TerminalMonitor.hpp
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
 .PHONY: all clean fclean re sdl2

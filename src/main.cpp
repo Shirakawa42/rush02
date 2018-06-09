@@ -10,7 +10,15 @@
 #include <iomanip>
 #include <unistd.h>
 
-TerminalMonitor	term;
+struct	t_sdl
+{
+	SDL_Window		*win;
+	SDL_Renderer	*renderer;
+};
+
+//TerminalMonitor	term;
+CPU				cpu;
+t_sdl			s;
 
 void	print_usage(void)
 {
@@ -31,24 +39,42 @@ void	terminal(void)
 	}
 }
 
+void	renderRect(void)
+{
+	static int	pos = 0;
+	SDL_Rect	r;
+
+	r.x = 50;
+	r.y = 50;
+	r.w = 50;
+	r.h = 50;
+	SDL_SetRenderDrawColor(s.renderer, 255, 0, 255, 255);
+	SDL_RenderFillRect(s.renderer, &r);
+	SDL_RenderPresent(s.renderer);
+}
+
 void	windowed(void)
 {
+	SDL_CreateWindow("ft_gkrellm", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
+	s.renderer = SDL_CreateRenderer(s.win, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawColor(s.renderer, 211, 211, 211, 255);
+	SDL_RenderClear(s.renderer);
+	SDL_RenderPresent(s.renderer);
+	renderRect();
+	SDL_Delay(5000);
+	SDL_DestroyWindow(s.win);
+	SDL_Quit();
 }
 
 int		main(int argc, char **argv)
 {
-	CPU		cpu = CPU();
+//	TerminalMonitor	term;
+	CPU				cpu;
+	t_sdl			s;
 
-	std::cout << "Max Frequency: " << std::fixed << std::setprecision(2) <<
-		static_cast<float>(cpu.getMaxFrequency()) / 1000000000.0f << " GHz"<< std::endl;
-	std::cout << "Current Frequency: " << std::fixed << std::setprecision(2) <<
-		static_cast<float>(cpu.getCurrentFrequency()) / 1000000000.0f << " GHz"<< std::endl;
-	std::cout << "Number of cores: " << cpu.getNumberOfCores() << " Cores" << std::endl;
-	std::cout << "Max memory: " << cpu.getMemorySize() / 1000000 << " Mb" << std::endl;
-
-	TerminalMonitor	term;
-
-	signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
+	SDL_Init(SDL_INIT_VIDEO);
+	windowed();
+	//signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
 	if (argc == 1)
 		terminal();
 	else if (argc == 2)

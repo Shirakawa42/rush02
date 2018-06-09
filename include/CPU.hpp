@@ -4,10 +4,11 @@
 
 #include <iostream>
 #include <string>
-#include <mach/mach_init.h>
+/*#include <mach/mach_init.h>
 #include <mach/mach_error.h>
 #include <mach/mach_host.h>
 #include <mach/vm_map.h>
+*/
 #include <sys/sysctl.h>
 
 class	CPU
@@ -33,8 +34,8 @@ class	CPU
 	private:
 		float				CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
 		float				GetCPULoad(void);
-		unsigned long long	_previousTotalTicks = 0;
-		unsigned long long	_previousIdleTicks = 0;
+		unsigned long long	_previousTotalTicks;
+		unsigned long long	_previousIdleTicks;
 		size_t				_current_frequency;
 		size_t				_max_frequency;
 		std::string			_name;
