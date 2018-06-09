@@ -4,8 +4,8 @@
 class	IMonitorModule
 {
 	public:
-		virtual	IMonitorModule(void);
-		virtual	IMonitorModule(const IMonitorModule &b);
+		IMonitorModule(void);
+		IMonitorModule(const IMonitorModule &b);
 		virtual	~IMonitorModule(void);
 
 		virtual	IMonitorModule	&operator=(const IMonitorModule &b);

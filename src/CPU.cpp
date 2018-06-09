@@ -28,17 +28,19 @@ CPU &	CPU::operator = ( const CPU & cpy )
 void		CPU::setCurrentFrequency(void)
 {
 	size_t	cpu;
-	size_t	i;
+	size_t	i = 8;
 
-	_current_frequency = sysctlbyname("hw.cpufrequency", &cpu, &i, NULL, 0);
+	sysctlbyname("hw.cpufrequency", &cpu, &i, NULL, 0);
+	_current_frequency = cpu;
 }
 
 void		CPU::setMaxFrequency(void)
 {
 	size_t	cpu;
-	size_t	i;
+	size_t	i = 8;
 
-	_max_frequency = sysctlbyname("hw.cpufrequency_max", &cpu, &i, NULL, 0);
+	sysctlbyname("hw.cpufrequency_max", &cpu, &i, NULL, 0);
+	_max_frequency = cpu;
 }
 
 void		CPU::setName(void)
@@ -54,17 +56,19 @@ void		CPU::setCurrentUsage(void)
 void		CPU::setNumberOfCores(void)
 {
 	size_t	cpu;
-	size_t	i;
+	size_t	i = 8;
 
-	_number_of_cores = sysctlbyname("hw.ncpu", &cpu, &i, NULL, 0);
+	sysctlbyname("hw.ncpu", &cpu, &i, NULL, 0);
+	_number_of_cores = cpu;
 }
 
 void		CPU::setMemorySize(void)
 {
 	size_t	cpu;
-	size_t	i;
+	size_t	i = 8;
 
-	_memory_size = sysctlbyname("hw.memsize", &cpu, &i, NULL, 0);
+	sysctlbyname("hw.memsize", &cpu, &i, NULL, 0);
+	_memory_size = cpu;
 }
 
 size_t		CPU::getMemorySize(void)
