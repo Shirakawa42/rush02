@@ -6,7 +6,7 @@
 #    By: pribault <pribault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/09 10:39:10 by pribault          #+#    #+#              #
-#    Updated: 2018/06/09 12:31:27 by pribault         ###   ########.fr        #
+#    Updated: 2018/06/09 14:38:49 by lvasseur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ SRC_DIR =	src
 OBJ_DIR =	.obj
 INC_DIR =	include
 
-SRC =	ft_gkrellm.cpp Terminal.cpp Window.cpp Log.cpp
+SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
-INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
+INC =	IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
 		Window.hpp Log.hpp
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
