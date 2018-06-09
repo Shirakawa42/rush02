@@ -6,12 +6,9 @@
 #    By: pribault <pribault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/09 10:39:10 by pribault          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2018/06/09 15:32:29 by pribault         ###   ########.fr        #
-=======
-#    Updated: 2018/06/09 14:38:49 by lvasseur         ###   ########.fr        #
->>>>>>> master
+#    Updated: 2018/06/09 15:46:31 by pribault         ###   ########.fr        #
 #                                                                              #
+# **************************************************************************** #
 # **************************************************************************** #
 
 NAME =	ft_gkrellm
@@ -22,18 +19,11 @@ SRC_DIR =	src
 OBJ_DIR =	.obj
 INC_DIR =	include
 
-<<<<<<< HEAD
-SRC =	ft_gkrellm.cpp Terminal.cpp Window.cpp Log.cpp TerminalMonitor.cpp\
+SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp TerminalMonitor.cpp\
 		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
 INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
 		Window.hpp Log.hpp TerminalMonitor.hpp
-=======
-SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp
-OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
-INC =	IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
-		Window.hpp Log.hpp
->>>>>>> master
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
 .PHONY: all clean fclean re sdl2
