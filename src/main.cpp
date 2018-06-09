@@ -48,6 +48,7 @@ void	renderRect(void)
 	r.y = 50;
 	r.w = 50;
 	r.h = 50;
+	SDL_RenderClear(s.renderer);
 	SDL_SetRenderDrawColor(s.renderer, 255, 0, 255, 255);
 	SDL_RenderFillRect(s.renderer, &r);
 	SDL_RenderPresent(s.renderer);
@@ -55,8 +56,9 @@ void	renderRect(void)
 
 void	windowed(void)
 {
-	SDL_CreateWindow("ft_gkrellm", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
-	s.renderer = SDL_CreateRenderer(s.win, -1, SDL_RENDERER_ACCELERATED);
+	if ((s.win = SDL_CreateWindow("ft_gkrellm", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN)) == NULL)
+		exit(0);
+	s.renderer = SDL_CreateRenderer(s.win, -1, 0);
 	SDL_SetRenderDrawColor(s.renderer, 211, 211, 211, 255);
 	SDL_RenderClear(s.renderer);
 	SDL_RenderPresent(s.renderer);
@@ -72,7 +74,8 @@ int		main(int argc, char **argv)
 	CPU				cpu;
 	t_sdl			s;
 
-	SDL_Init(SDL_INIT_VIDEO);
+	if (SDL_Init(SDL_INIT_VIDEO))
+		exit(0);
 	windowed();
 	//signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
 	if (argc == 1)
