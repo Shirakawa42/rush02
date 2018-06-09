@@ -14,8 +14,8 @@ class	Log
 
 		Log		&operator=(const Log &b);
 		Log		&operator<<(const std::string &s);
-		Log		&operator<<(const long &n);
-		Log		&operator<<(const unsigned long &n);
+		Log		&operator<<(long n);
+		Log		&operator<<(unsigned long n);
 		Log		&operator<<(std::ostream& (*pf)(std::ostream&));
 
 		std::string	getFile(void) const;

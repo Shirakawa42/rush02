@@ -56,7 +56,7 @@ Log		&Log::operator<<(const std::string &s)
 	return (*this);
 }
 
-Log		&Log::operator<<(const long &n)
+Log		&Log::operator<<(long n)
 {
 	if (_stream.is_open())
 	{
@@ -75,7 +75,7 @@ Log		&Log::operator<<(const long &n)
 	return (*this);
 }
 
-Log		&Log::operator<<(const unsigned long &n)
+Log		&Log::operator<<(unsigned long n)
 {
 	if (_stream.is_open())
 	{

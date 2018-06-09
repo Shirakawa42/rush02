@@ -117,7 +117,7 @@ void		Terminal::print(char c, int x, int y)
 {
 	if (x >= 0 && x < _width &&
 		y >= 0 && y < _height)
-		_buffer[_index][y * _height + x] = c;
+		_buffer[_index][y * (_height - 1) + x] = c;
 }
 
 void		Terminal::swapBuffers(void)

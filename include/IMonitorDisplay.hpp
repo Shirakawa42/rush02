@@ -8,7 +8,7 @@ class	IMonitorDisplay
 	public:
 		IMonitorDisplay(void);
 		IMonitorDisplay(const IMonitorDisplay &b);
-		virtual	~IMonitorDisplay(void);
+		~IMonitorDisplay(void);
 
 		virtual	IMonitorDisplay	&operator=(const IMonitorDisplay &b);
 
