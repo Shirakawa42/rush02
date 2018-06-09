@@ -26,7 +26,7 @@ class	CPU
 		size_t		getCurrentFrequency(void);
 		size_t		getMaxFrequency(void);
 		std::string	getName(void);
-		size_t		getCurrentUsage(void);
+		float		getCurrentUsage(void);
 		size_t		getNumberOfCores(void);
 		size_t		getMemorySize(void);
 
@@ -34,7 +34,7 @@ class	CPU
 		size_t		_current_frequency;
 		size_t		_max_frequency;
 		std::string	_name;
-		size_t		_current_usage;
+		float		_current_usage;
 		size_t		_number_of_cores;
 		size_t		_memory_size;
 };

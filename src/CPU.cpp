@@ -25,13 +25,35 @@ CPU &	CPU::operator = ( const CPU & cpy )
 	return *this;
 }
 
+static unsigned long long _previousTotalTicks = 0;
+static unsigned long long _previousIdleTicks = 0;
+
+float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks)
+{
+	unsigned long long totalTicksSinceLastTime = totalTicks - _previousTotalTicks;
+	unsigned long long idleTicksSinceLastTime  = idleTicks - _previousIdleTicks;
+	float ret = 1.0f - ((totalTicksSinceLastTime > 0) ? ((float)idleTicksSinceLastTime) / totalTicksSinceLastTime : 0);
+	_previousTotalTicks = totalTicks;
+	_previousIdleTicks  = idleTicks;
+	return ret;
+}
+
+float GetCPULoad()
+{
+	host_cpu_load_info_data_t cpuinfo;
+	mach_msg_type_number_t count = HOST_CPU_LOAD_INFO_COUNT;
+	if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count) == KERN_SUCCESS)
+	{
+		unsigned long long totalTicks = 0;
+		for(int i=0; i<CPU_STATE_MAX; i++) totalTicks += cpuinfo.cpu_ticks[i];
+		return CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks);
+	}
+	else return -1.0f;
+}
+
 void		CPU::setCurrentFrequency(void)
 {
-	size_t	cpu;
-	size_t	i = 8;
 
-	sysctlbyname("hw.cpufrequency", &cpu, &i, NULL, 0);
-	_current_frequency = cpu;
 }
 
 void		CPU::setMaxFrequency(void)
@@ -45,12 +67,16 @@ void		CPU::setMaxFrequency(void)
 
 void		CPU::setName(void)
 {
+	char		cpu[128];
+	size_t		i = 128;
 
+	sysctlbyname("machdep.cpu.brand_string", &cpu, &i, NULL, 0);
+	_name = cpu;
 }
 
 void		CPU::setCurrentUsage(void)
 {
-
+	_current_usage = GetCPULoad() * 100.0f;
 }
 
 void		CPU::setNumberOfCores(void)
@@ -92,7 +118,7 @@ std::string	CPU::getName(void)
 	return _name;
 }
 
-size_t		CPU::getCurrentUsage(void)
+float		CPU::getCurrentUsage(void)
 {
 	setCurrentUsage();
 	return _current_usage;
