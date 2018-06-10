@@ -52,11 +52,6 @@ float	CPU::GetCPULoad()
 		return -1.0f;
 }
 
-void		CPU::setCurrentFrequency(void)
-{
-
-}
-
 void		CPU::setMaxFrequency(void)
 {
 	size_t	cpu;
@@ -98,15 +93,37 @@ void		CPU::setMemorySize(void)
 	_memory_size = cpu;
 }
 
+void		CPU::setUsedMemory(void)
+{
+	vm_size_t page_size;
+    mach_port_t mach_port;
+    mach_msg_type_number_t count;
+    vm_statistics64_data_t vm_stats;
+
+    mach_port = mach_host_self();
+    count = sizeof(vm_stats) / sizeof(natural_t);
+    if (KERN_SUCCESS == host_page_size(mach_port, &page_size) &&
+        KERN_SUCCESS == host_statistics64(mach_port, HOST_VM_INFO,
+                                        (host_info64_t)&vm_stats, &count))
+    {;
+        long long usedMemory = (vm_stat	s.active_count +
+                                 vm_stats.inactive_count +
+                                 vm_stats.wire_count) *  page_size;
+        _used_memory = usedMemory;
+        return ;
+    }
+    _used_memory = 0;
+}
+
+size_t		CPU::getUsedMemory(void)
+{
+	setUsedMemory();
+	return _used_memory;
+}
+
 size_t		CPU::getMemorySize(void)
 {
 	return _memory_size;
-}
-
-size_t		CPU::getCurrentFrequency(void)
-{
-	setCurrentFrequency();
-	return _current_frequency;
 }
 
 size_t		CPU::getMaxFrequency(void)
