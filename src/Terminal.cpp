@@ -17,8 +17,9 @@ Terminal::Terminal(void)
 	getmaxyx(stdscr, _height, _width);
 	start_color();
 	init_color(COLOR_GREY, 200, 200, 200);
+	init_color(COLOR_CYAN2, 200, 300, 200);
 	init_pair(COLOR_RESET, COLOR_WHITE, COLOR_BLACK);
-	init_pair(COLOR_BOX, COLOR_WHITE, COLOR_GREY);
+	init_pair(COLOR_BOX, COLOR_CYAN2, COLOR_GREY);
 	_log << "termsize(" << static_cast<long>(_width) << ";" <<
 		static_cast<long>(_height) << ")" << std::endl;
 	start_color();
@@ -169,17 +170,17 @@ void	Terminal::drawBox(int x, int y, int width, int height)
 	attrset(COLOR_PAIR(COLOR_BOX));
 	for (int i = 0; i < width; i++)
 	{
-		print(x + i, y, COLOR_BOX, ' ');
-		print(x + i, y + height - 1, COLOR_BOX, ' ');
+		print(x + i, y, COLOR_BOX, '-');
+		print(x + i, y + height - 1, COLOR_BOX, '-');
 	}
 	for (int i = 0; i < height; i++)
 	{
-		print(x, y + i, COLOR_BOX, ' ');
-		print(x + width - 1, y + i, COLOR_BOX, ' ');
+		print(x, y + i, COLOR_BOX, '|');
+		print(x + width - 1, y + i, COLOR_BOX, '|');
 	}
-	print(x, y, COLOR_BOX, ' ');
-	print(x + width - 1, y, COLOR_BOX, ' ');
-	print(x, y + height - 1, COLOR_BOX, ' ');
-	print(x + width - 1, y + height - 1, COLOR_BOX, ' ');
+	print(x, y, COLOR_BOX, '+');
+	print(x + width - 1, y, COLOR_BOX, '+');
+	print(x, y + height - 1, COLOR_BOX, '+');
+	print(x + width - 1, y + height - 1, COLOR_BOX, '+');
 	attrset(COLOR_PAIR(COLOR_RESET) | A_NORMAL);
 }

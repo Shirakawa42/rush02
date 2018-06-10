@@ -5,6 +5,7 @@
 
 # define COLOR_RESET	0
 # define COLOR_GREY		8
+# define COLOR_CYAN2	9
 # define COLOR_BOX		1
 
 typedef struct		s_color
