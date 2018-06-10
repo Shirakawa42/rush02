@@ -90,7 +90,7 @@ void	CpuModule::drawWin(Window &window) const
 	r.w = w;
 	r.h = h;
 	//TTF_Font *font = TTF_OpenFont("font.ttf", 16);
-	cpu.getCurrentUsage(); // anti segfault car tabl size= 0
+	float cpuUsage = cpu.getCurrentUsage(); // anti segfault car tabl size= 0
 	std::vector<int> cpuHistoryGraph = cpu.getHistory();
 	int currentPercantage = cpuHistoryGraph[cpuHistoryGraph.size()-1];
 	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
@@ -127,7 +127,7 @@ void	CpuModule::drawWin(Window &window) const
 	}
 	SDL_RenderDrawLines(window.getRenderer(), list, cpuHistoryGraph.size());
 
-	window.writeText(50, 50, "test", window.white);
+	window.writeText(x+10, y+10, std::string("CPU usage: ") + std::to_string(cpuUsage), window.white);
 
 	SDL_RenderPresent(window.getRenderer());
 }

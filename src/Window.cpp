@@ -10,7 +10,7 @@ Window::Window(void)
 		SDL_Init(SDL_INIT_EVERYTHING);
 		TTF_Init();
 		init_colors();
-		this->font = TTF_OpenFont("leadcoat.ttf", POLICE);
+		this->font = TTF_OpenFont("futura.ttf", POLICE);
 		this->window = SDL_CreateWindow(
 		"ft_gkrellm",
 		SDL_WINDOWPOS_UNDEFINED,
