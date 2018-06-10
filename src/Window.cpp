@@ -86,4 +86,6 @@ void	Window::writeText(int x, int y, std::string text, SDL_Color color)
 	SDL_QueryTexture(message, NULL, NULL, &x_text, &y_text);
 	SDL_Rect 	textRect = {x, y, x_text, y_text};
 	SDL_RenderCopy(this->renderer, message, NULL, &textRect);
+	SDL_FreeSurface(surfaceMessage);
+	SDL_DestroyTexture(message);
 }

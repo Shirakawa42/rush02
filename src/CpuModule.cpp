@@ -164,7 +164,53 @@ void	CpuModule::drawWin(Window &window) const
 	window.writeText(x+10, y+10, std::string("CPU usage: ") + std::to_string(static_cast<int>(cpuUsage)) + '%', window.white);
 	window.writeText(x+10, y+30, std::string("Number of cores : ") + std::to_string(cpu.getNumberOfCores()) , window.white);
 	window.writeText(x+10, y+50, std::string("CPU Name: ") + cpu.getName() , window.white);
-	window.writeText(x+10, y+70, std::string("Used Memory: ") + std::to_string(cpu.getUsedMemory() / 1024 / 1024) + std::string(" Mb"), window.white);
+	drawRAM(window);
+}
+
+void	CpuModule::drawRAM(Window &window) const
+{
+	int x = this->getX();
+	int y = this->getY() + 502;
+	int w = this->getWidth();
+	int h = this->getHeight();
+
+	SDL_Rect	r;
+
+	r.x = x;
+	r.y = y;
+	r.w = w;
+	r.h = h;
+	size_t ram = cpu.getUsedMemory();
+	std::vector<int> ramHistoryGraph = cpu.getRamHistory();
+	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
+	SDL_RenderFillRect(window.getRenderer(), &r);
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 47, 85, 101, 255);
+
+	int i0 = 50;
+	
+	while (i0 < w)
+	{
+		SDL_RenderDrawLine(window.getRenderer(), x + i0, y, x + i0, y+h);
+		i0 += 50;
+	}
+	SDL_SetRenderDrawColor(window.getRenderer(), 57, 104, 123, 255);
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 78, 142, 168, 255);
+	size_t i = 0;
+	SDL_Point list[ ramHistoryGraph.size()];
+	while (i < ramHistoryGraph.size())
+	{
+		double realx = remap(static_cast<double>(i), static_cast<double>(0), static_cast<double>(99), static_cast<double>(0), static_cast<double>(w) );
+		double realy = remap(static_cast<double>(100-ramHistoryGraph[i]), static_cast<double>(0), static_cast<double>(100), static_cast<double>(0), static_cast<double>(h) );
+		list[i].x = x + realx;
+		list[i].y = y + realy;
+		i++;
+	}
+	SDL_RenderDrawLines(window.getRenderer(), list, ramHistoryGraph.size());
+
+
+	window.writeText(x+10, y+10, std::string("Used Memory: ") + std::to_string(ram / 1024 / 1024) + std::string(" Mb"), window.white);
 
 }
 

@@ -118,6 +118,9 @@ void		CPU::setUsedMemory(void)
 size_t		CPU::getUsedMemory(void)
 {
 	setUsedMemory();
+	if (this->_ramHistory.size() == 100)
+		this->_ramHistory.erase(this->_ramHistory.begin());
+	_ramHistory.push_back((static_cast<float>(this->_used_memory) / static_cast<float>(this->_memory_size)) * 100.0f);
 	return _used_memory;
 }
 
@@ -155,4 +158,8 @@ std::vector<int> const			&CPU::getHistory(void) const
 	return (_freqHistory);
 }
 
+std::vector<int> const			&CPU::getRamHistory(void) const
+{
+	return (_ramHistory);
+}
 
