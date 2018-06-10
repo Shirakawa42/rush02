@@ -12,7 +12,7 @@ class	IMonitorDisplay
 
 		virtual	IMonitorDisplay	&operator=(const IMonitorDisplay &b);
 
-		virtual	void	draw(const IMonitorModule &module);
+		virtual	void	draw(IMonitorModule &module);
 		virtual	void	render(void);
 	private:
 };

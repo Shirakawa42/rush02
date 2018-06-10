@@ -8,6 +8,11 @@
 
 NetworkModule::NetworkModule(void)
 {
+	input_speed = 0;
+	output_speed = 0;
+	prev_input = 0;
+	prev_output = 0;
+	refresh_rate = 1000000;
 }
 
 NetworkModule::NetworkModule(const NetworkModule &b)
@@ -39,7 +44,7 @@ NetworkModule	&NetworkModule::operator=(const NetworkModule &b)
 	return (*this);
 }
 
-void	NetworkModule::drawTerm(Terminal &terminal) const
+void	NetworkModule::drawTerm(Terminal &terminal)
 {
     size_t				len;
 	size_t				input;
@@ -103,12 +108,6 @@ void	NetworkModule::drawTerm(Terminal &terminal) const
 		s.append(std::to_string(output % 1024)).append(" bytes");
 	printText(terminal, s, 2, 4);
 
-	static size_t			input_speed = 0;
-	static size_t			output_speed = 0;
-	static size_t			prev_input = 0;
-	static size_t			prev_output = 0;
-	static struct timeval	prev;
-	static size_t			refresh_rate = 1000000;
 	struct timeval			now;
 	size_t					diff;
 

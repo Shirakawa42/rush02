@@ -15,7 +15,7 @@ class	TerminalMonitor : virtual public IMonitorDisplay
 
 		Terminal	&getTerm(void);
 
-		void	draw(const IMonitorModule &module);
+		void	draw(IMonitorModule &module);
 		void	render(void);
 	private:
 		Terminal	_term;

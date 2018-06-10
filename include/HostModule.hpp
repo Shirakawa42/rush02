@@ -13,7 +13,7 @@ class	HostModule : public IMonitorModule
 
 		HostModule	&operator=(const HostModule &b);
 
-		void	drawTerm(Terminal &terminal) const;
+		void	drawTerm(Terminal &terminal);
 		void	drawWin(Window &window) const;
 	private:
 };

@@ -34,7 +34,7 @@ IMonitorModule	&IMonitorModule::operator=(const IMonitorModule &b)
 	return (*this);
 }
 
-void	IMonitorModule::drawTerm(Terminal &terminal) const
+void	IMonitorModule::drawTerm(Terminal &terminal)
 {
 	for (int x = _x; x < _x + _width; x++)
 		for (int y = _y; y < _y + _height; y++)

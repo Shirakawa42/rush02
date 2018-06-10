@@ -19,7 +19,7 @@ IMonitorDisplay	&IMonitorDisplay::operator=(const IMonitorDisplay &b)
 	return (*this);
 }
 
-void	IMonitorDisplay::draw(const IMonitorModule &module)
+void	IMonitorDisplay::draw(IMonitorModule &module)
 {
 	(void)module;
 }

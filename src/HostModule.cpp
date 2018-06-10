@@ -38,7 +38,7 @@ HostModule	&HostModule::operator=(const HostModule &b)
 	return (*this);
 }
 
-void	HostModule::drawTerm(Terminal &terminal) const
+void	HostModule::drawTerm(Terminal &terminal)
 {
 	char		buffer[128];
 	size_t		len = sizeof(buffer);

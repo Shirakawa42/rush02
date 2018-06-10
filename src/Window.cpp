@@ -56,7 +56,7 @@ void	Window::init_colors(void)
 	grey.b = 180;
 }
 
-void Window::draw(const IMonitorModule &module)
+void Window::draw(IMonitorModule &module)
 {
 	module.drawWin(*this);
 }

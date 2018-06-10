@@ -13,9 +13,15 @@ class	NetworkModule : public IMonitorModule
 
 		NetworkModule	&operator=(const NetworkModule &b);
 
-		void	drawTerm(Terminal &terminal) const;
+		void	drawTerm(Terminal &terminal);
 		void	drawWin(Window &window) const;
 	private:
+		size_t			input_speed;
+		size_t			output_speed;
+		size_t			prev_input;
+		size_t			prev_output;
+		struct timeval	prev;
+		size_t			refresh_rate;
 };
 
 #endif

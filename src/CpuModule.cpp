@@ -39,7 +39,7 @@ CpuModule	&CpuModule::operator=(const CpuModule &b)
 	return (*this);
 }
 
-void	CpuModule::drawTerm(Terminal &terminal) const
+void	CpuModule::drawTerm(Terminal &terminal)
 {
 	static struct timeval	prev;
 	static size_t			refresh_time = 500000;

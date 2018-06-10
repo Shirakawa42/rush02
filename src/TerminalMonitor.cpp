@@ -26,7 +26,7 @@ Terminal	&TerminalMonitor::getTerm(void)
 	return (_term);
 }
 
-void	TerminalMonitor::draw(const IMonitorModule &module)
+void	TerminalMonitor::draw(IMonitorModule &module)
 {
 	module.drawTerm(_term);
 	_term.drawBox(module.getX() - 1, module.getY() - 1, module.getWidth() + 2, module.getHeight() + 2);
