@@ -122,6 +122,8 @@ void	windowed(void)
 				exit(0);
 			}
 		}
+
+			SDL_Delay(1000);
 	}
 }
 
