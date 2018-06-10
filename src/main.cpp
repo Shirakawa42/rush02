@@ -132,6 +132,7 @@ void	windowed(void)
 				exit(0);
 			}
 		}
+		SDL_DestroyTexture(texture1);
 		SDL_Delay(1000);
 	}
 }
