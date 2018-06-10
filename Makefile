@@ -39,7 +39,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDE) | $(OBJ_DIR)
 
 $(NAME): $(OBJ)
 	echo $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) -lncurses -lSDL2
+	$(CC) $(FLAGS) -o $(NAME) $(OBJ) -lncurses -lSDL2 -lSDL2_ttf
 
 clean:
 	rm -f $(OBJ)

@@ -7,7 +7,10 @@
 
 Window::Window(void)
 {
-SDL_Init(SDL_INIT_EVERYTHING);
+		SDL_Init(SDL_INIT_EVERYTHING);
+		TTF_Init();
+		init_colors();
+		this->font = TTF_OpenFont("leadcoat.ttf", POLICE);
 		this->window = SDL_CreateWindow(
 		"ft_gkrellm",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -31,7 +34,7 @@ Window::Window(const Window &b)
 
 Window::~Window(void)
 {
-	//SDL_DestroyWindow(this->window);
+	SDL_DestroyWindow(this->window);
 }
 
 Window	&Window::operator=(const Window &rhs)
@@ -42,6 +45,18 @@ Window	&Window::operator=(const Window &rhs)
 	return (*this);
 }
 
+void	Window::init_colors(void)
+{
+	white.r = 255;
+	white.g = 255;
+	white.b = 255;
+	lightgrey.r = 211;
+	lightgrey.g = 211;
+	lightgrey.b = 211;
+	grey.r = 180;
+	grey.g = 180;
+	grey.b = 180;
+}
 
 void Window::draw(const IMonitorModule &module)
 {
@@ -67,3 +82,14 @@ SDL_Surface *Window::getSurface(void)
 	return (this->surface);
 }
 
+void	Window::writeText(int x, int y, std::string text, SDL_Color color)
+{
+	int 	x_text = 0;
+	int 	y_text = 0;
+
+	SDL_Surface	*surfaceMessage = TTF_RenderText_Solid(this->font, text.c_str(), color);
+	SDL_Texture	*message = SDL_CreateTextureFromSurface(this->renderer, surfaceMessage);
+	SDL_QueryTexture(message, NULL, NULL, &x_text, &y_text);
+	SDL_Rect 	textRect = {x, y, x_text, y_text};
+	SDL_RenderCopy(this->renderer, message, NULL, &textRect);
+}
