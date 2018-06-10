@@ -3,7 +3,7 @@
 
 #include <IMonitorDisplay.hpp>
 
-
+#include "Log.hpp"
 
 Window::Window(void)
 {
