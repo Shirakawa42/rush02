@@ -44,7 +44,7 @@ void	clean_exit(void)
 
 void	addModule(IMonitorModule *module)
 {
-	static int	n = 2;
+	static int	n = 3;
 	static int	i = 0;
 	int			width = term->getTerm().getWidth();
 	int			height = term->getTerm().getHeight();
@@ -72,6 +72,7 @@ void	terminal(void)
 	size_t			us;
 
 	term = new TerminalMonitor();
+	addModule(new HostModule());
 	addModule(new CpuModule());
 	addModule(new NetworkModule());
 	while (true)
@@ -114,9 +115,9 @@ void	windowed(void)
 		{
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
 			{
-			/*	SDL_DestroyRenderer(window->getRenderer());
+				SDL_DestroyRenderer(window->getRenderer());
 				SDL_DestroyWindow(window->getWindow());
-				SDL_Quit();*/
+				SDL_Quit();
 				exit(0);
 			}
 		}
@@ -125,13 +126,6 @@ void	windowed(void)
 
 int		main(int argc, char **argv)
 {
-	std::cout << "Max Frequency: " << std::fixed << std::setprecision(2) <<
-		static_cast<float>(cpu.getMaxFrequency()) / 1000000000.0f << " GHz"<< std::endl;
-	std::cout << "Current Frequency: " << std::fixed << std::setprecision(2) <<
-		static_cast<float>(cpu.getCurrentFrequency()) / 1000000000.0f << " GHz"<< std::endl;
-	std::cout << "Number of cores: " << cpu.getNumberOfCores() << " Cores" << std::endl;
-	std::cout << "Max memory: " << cpu.getMemorySize() / 1000000 << " Mb" << std::endl;
-
 	atexit(&clean_exit);
 	signal(SIGINT, reinterpret_cast<void (*)(int)>(&signal_handler));
 	signal(SIGHUP, reinterpret_cast<void (*)(int)>(&signal_handler));

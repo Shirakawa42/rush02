@@ -21,10 +21,11 @@ INC_DIR =	include
 
 SRC =	main.cpp Terminal.cpp Window.cpp Log.cpp CPU.cpp TerminalMonitor.cpp\
 		IMonitorModule.cpp IMonitorDisplay.cpp term.cpp CpuModule.cpp\
-		NetworkModule.cpp
+		NetworkModule.cpp HostModule.cpp
 OBJ =	$(sort $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRC)))
 INC =	ft_gkrellm.hpp IMonitorModule.hpp IMonitorDisplay.hpp Terminal.hpp\
-		Window.hpp Log.hpp TerminalMonitor.hpp CpuModule.hpp NetworkModule.hpp
+		Window.hpp Log.hpp TerminalMonitor.hpp CpuModule.hpp NetworkModule.hpp\
+		HostModule.hpp
 INCLUDE =	$(sort $(patsubst %.hpp, $(INC_DIR)/%.hpp, $(INC)))
 
 .PHONY: all clean fclean re sdl2

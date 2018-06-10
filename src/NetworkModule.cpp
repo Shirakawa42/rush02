@@ -37,11 +37,10 @@ void	NetworkModule::drawTerm(Terminal &terminal) const
 {
 	std::string	s;
 
-	printText(terminal, "Network", (getWidth() - 3) / 2, 1);
+	printText(terminal, "Network", (getWidth() - 7) / 2, 1);
 }
 
 void	NetworkModule::drawWin(Window &window) const
 {
 	(void)window;
 }
-
