@@ -49,12 +49,23 @@ NetworkModule	&NetworkModule::operator=(const NetworkModule &b)
 	return (*this);
 }
 
+size_t	get_max(std::vector<size_t> &vector)
+{
+	size_t	max = 0;
+
+	for (size_t i = 0; i < vector.size(); i++)
+		if (vector[i] > max)
+			max = vector[i];
+	return (max);
+}
+
 void	NetworkModule::drawTerm(Terminal &terminal)
 {
-    size_t				len;
-	size_t				input;
-	size_t				output;
-	int					mib[] = {
+	static struct timeval	prev;
+    size_t					len;
+	size_t					input;
+	size_t					output;
+	int						mib[] = {
         CTL_NET,
         PF_ROUTE,
         0,
@@ -62,9 +73,10 @@ void	NetworkModule::drawTerm(Terminal &terminal)
         NET_RT_IFLIST2,
         0
     };
-	char				*buffer;
-	struct if_msghdr	*next;
-	std::string			s;
+	char					*buffer;
+	struct if_msghdr		*next;
+	size_t					refresh_rate = 1000000;
+	std::string				s;
 
 	printText(terminal, "Network", (getWidth() - 7) / 2, 1);
 	if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0)
@@ -124,6 +136,13 @@ void	NetworkModule::drawTerm(Terminal &terminal)
 		output_speed = (1000000 * (output - prev_output)) / diff;
 		prev_input = input;
 		prev_output = output;
+		if (_speedHistory.size() == 100)
+			_speedHistory.erase(_speedHistory.begin());
+		_speedHistory.push_back(input_speed);
+
+		if (_speedHistory2.size() == 100)
+			_speedHistory2.erase(_speedHistory2.begin());
+		_speedHistory2.push_back(output_speed);
 		prev = now;
 	}
 	s = "Input speed: ";
@@ -146,6 +165,29 @@ void	NetworkModule::drawTerm(Terminal &terminal)
 	if (output_speed % 1024)
 		s.append(std::to_string(output_speed % 1024)).append(" bytes");
 	printText(terminal, s, 2, 7);
+
+	if (getHeight() > 9)
+	{
+		int		x, y;
+		for (int i = 0; i < getWidth(); i++)
+		{
+			x = _speedHistory.size() - getWidth() + i;
+			if (x >= 0 && get_max(_speedHistory))
+				y = 9 + (getHeight() - 9) / 2 - (_speedHistory[x] * ((getHeight() - 9) / 2)) / get_max(_speedHistory);
+			else
+				y = 9 + (getHeight() - 9) / 2;
+			for (int j = y; j < 9 + (getHeight() - 9) / 2; j++)
+				terminal.print(i + getX(), j + getY(), COLOR_GRAPH_RX, ' ');
+
+			x = _speedHistory2.size() - getWidth() + i;
+			if (x >= 0 && get_max(_speedHistory2))
+				y = 9 + (getHeight() - 9) / 2 + (_speedHistory2[x] * ((getHeight() - 9) / 2)) / get_max(_speedHistory2);
+			else
+				y = 9 + (getHeight() - 9) / 2 - 1;
+			for (int j = y; j >= 9 + (getHeight() - 9) / 2; j--)
+				terminal.print(i + getX(), j + getY(), COLOR_GRAPH_TX, ' ');
+		}
+	}
 }
 
 static double remap(double value, double low1, double high1, double low2, double high2)

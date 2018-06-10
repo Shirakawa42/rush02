@@ -8,9 +8,13 @@
 # define COLOR_CYAN2		9
 # define COLOR_GREEN2		10
 # define COLOR_CYAN3		11
+# define COLOR_MAGENTA3		12
+# define COLOR_BLUE2		13
 # define COLOR_BOX			1
 # define COLOR_GRAPH_CPU	2
 # define COLOR_GRAPH_RAM	3
+# define COLOR_GRAPH_RX		4
+# define COLOR_GRAPH_TX		5
 
 typedef struct		s_color
 {

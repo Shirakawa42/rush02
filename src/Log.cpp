@@ -85,7 +85,7 @@ Log		&Log::operator<<(unsigned long n)
 			time_t		t = time(0);
 
 			str.resize(20);
-			str.resize(strftime((char *)str.c_str(), str.length(), "%G%m%d_%H%M%S", localtime(&t)));
+			str.resize(strftime(const_cast<char*>(str.c_str()), str.length(), "%G%m%d_%H%M%S", localtime(&t)));
 			_stream << "[" << str << "] ";
 		}
 		_stream << n;
