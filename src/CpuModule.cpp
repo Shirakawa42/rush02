@@ -133,8 +133,9 @@ void	CpuModule::drawWin(Window &window) const
 	}
 	SDL_RenderDrawLines(window.getRenderer(), list, cpuHistoryGraph.size());
 
-	window.writeText(x+10, y+10, std::string("CPU usage: ") + std::to_string(cpuUsage), window.white);
+	window.writeText(x+10, y+10, std::string("CPU usage: ") + std::to_string(static_cast<int>(cpuUsage)) + '%', window.white);
+	window.writeText(x+10, y+30, std::string("Number of cores : ") + std::to_string(cpu.getNumberOfCores()) , window.white);
+	window.writeText(x+10, y+50, std::string("CPU Name: ") + cpu.getName() , window.white);
 
-	SDL_RenderPresent(window.getRenderer());
 }
 
