@@ -17,18 +17,18 @@ class	CPU
 		~CPU();
 		CPU( const CPU & );
 		CPU &	operator = ( const CPU & );
-		void		setCurrentFrequency(void);
 		void		setMaxFrequency(void);
 		void		setName(void);
 		void		setCurrentUsage(void);
 		void		setNumberOfCores(void);
 		void		setMemorySize(void);
-		size_t		getCurrentFrequency(void);
+		void		setUsedMemory(void);
 		size_t		getMaxFrequency(void);
 		std::string	getName(void);
 		float		getCurrentUsage(void);
 		size_t		getNumberOfCores(void);
 		size_t		getMemorySize(void);
+		size_t		getUsedMemory(void);
 		std::vector<int> const	&getHistory(void) const;
 
 
@@ -37,14 +37,13 @@ class	CPU
 		float				GetCPULoad(void);
 		unsigned long long	_previousTotalTicks;
 		unsigned long long	_previousIdleTicks;
-		size_t				_current_frequency;
 		size_t				_max_frequency;
 		std::string			_name;
 		float				_current_usage;
 		size_t				_number_of_cores;
 		size_t				_memory_size;
 		std::vector<int>	_freqHistory; // history of total cpu usage
-
+		size_t				_used_memory;
 };
 
 extern CPU	cpu;
