@@ -12,7 +12,7 @@
 #include <unistd.h>
 
 TerminalMonitor					*term = NULL;
-Window *window;
+Window							*window;
 
 std::vector<IMonitorModule*>	modules;
 

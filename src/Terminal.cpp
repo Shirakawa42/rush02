@@ -15,6 +15,11 @@ Terminal::Terminal(void)
 	nodelay(stdscr, TRUE);
 	curs_set(FALSE);
 	getmaxyx(stdscr, _height, _width);
+	if (_height < 10 || _width < 20)
+	{
+		endwin();
+		exit(EXIT_FAILURE);
+	}
 	start_color();
 	init_color(COLOR_GREY, 200, 200, 200);
 	init_color(COLOR_CYAN2, 200, 300, 200);
