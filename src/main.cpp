@@ -104,7 +104,9 @@ SDL_Event e;
 
 void	windowed(void)
 {
+
 	window = new Window();
+	modules.push_back(new CpuModule(50,50,500,550));
 
 	while (true)
 	{
@@ -121,6 +123,8 @@ void	windowed(void)
 				exit(0);
 			}
 		}
+
+			SDL_Delay(1000);
 	}
 }
 
