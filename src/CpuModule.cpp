@@ -92,7 +92,6 @@ void	CpuModule::drawWin(Window &window) const
 	//TTF_Font *font = TTF_OpenFont("font.ttf", 16);
 	cpu.getCurrentUsage(); // anti segfault car tabl size= 0
 	std::vector<int> cpuHistoryGraph = cpu.getHistory();
-	std::cout << cpuHistoryGraph.size() <<  std::endl;
 	int currentPercantage = cpuHistoryGraph[cpuHistoryGraph.size()-1];
 	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
 	SDL_RenderFillRect(window.getRenderer(), &r);
