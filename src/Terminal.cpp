@@ -18,8 +18,10 @@ Terminal::Terminal(void)
 	start_color();
 	init_color(COLOR_GREY, 200, 200, 200);
 	init_color(COLOR_CYAN2, 200, 300, 200);
+	init_color(COLOR_GREEN2, 200, 800, 200);
 	init_pair(COLOR_RESET, COLOR_WHITE, COLOR_BLACK);
 	init_pair(COLOR_BOX, COLOR_CYAN2, COLOR_GREY);
+	init_pair(COLOR_GRAPH_CPU, COLOR_GREEN2, COLOR_GREEN2);
 	_log << "termsize(" << static_cast<long>(_width) << ";" <<
 		static_cast<long>(_height) << ")" << std::endl;
 	start_color();

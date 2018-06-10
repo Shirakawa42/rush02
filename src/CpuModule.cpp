@@ -77,14 +77,29 @@ void	CpuModule::drawTerm(Terminal &terminal)
 	if (cpu.getMemorySize() % 1024)
 		s.append(std::to_string(cpu.getMemorySize() % 1024)).append(" bytes");
 	printText(terminal, s, 2, 7);
+
+	printText(terminal, "CPU History:", 2, 9);
+	if (getHeight() > 12)
+	{
+		std::vector<int>	cpuHistoryGraph = cpu.getHistory();
+		int					x, y;
+		for (int i = 0; i < getWidth(); i++)
+		{
+			x = cpuHistoryGraph.size() - getWidth() + i;
+			if (x >= 0)
+				y = (cpuHistoryGraph[x] * (getHeight() - 12)) / -100 + getHeight();
+			else
+				y = getHeight() + 1;
+			for (int j = y; j < getHeight() + 1; j++)
+				terminal.print(i + getX(), j + getY(), COLOR_GRAPH_CPU, ' ');
+		}
+	}
 }
 
 double remap(double value, double low1, double high1, double low2, double high2)
 {
 	return (low2 + (value - low1) * (high2 - low2) / (high1 - low1));
 }
-
-
 
 void	CpuModule::drawWin(Window &window) const
 {
