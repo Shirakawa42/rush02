@@ -88,7 +88,7 @@ void	HostModule::drawTerm(Terminal &terminal)
 	}
 }
 
-void	HostModule::drawWin(Window &window) const
+void	HostModule::drawWin(Window &window)
 {
 	int x = this->getX();
 	int y = this->getY();

@@ -18,7 +18,7 @@ class	IMonitorModule
 		virtual	IMonitorModule	&operator=(const IMonitorModule &b);
 
 		virtual void	drawTerm(Terminal &terminal);
-		virtual void	drawWin(Window &window) const;
+		virtual void	drawWin(Window &window);
 
 		void			printText(Terminal &terminal, const std::string &s, int x, int y) const;
 

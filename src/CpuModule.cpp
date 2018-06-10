@@ -112,12 +112,14 @@ double remap(double value, double low1, double high1, double low2, double high2)
 	return (low2 + (value - low1) * (high2 - low2) / (high1 - low1));
 }
 
-void	CpuModule::drawWin(Window &window) const
+
+void	CpuModule::drawWin(Window &window)
+
 {
 	int x = this->getX();
 	int y = this->getY();
 	int w = this->getWidth();
-	int h = this->getHeight();
+	int h = this->getHeight()/2;
 
 	SDL_Rect	r;
 
@@ -169,12 +171,12 @@ void	CpuModule::drawWin(Window &window) const
 	drawRAM(window);
 }
 
-void	CpuModule::drawRAM(Window &window) const
+void	CpuModule::drawRAM(Window &window)
 {
 	int x = this->getX();
-	int y = this->getY() + 502;
+	int y = this->getY() + this->getHeight()/2+5;
 	int w = this->getWidth();
-	int h = this->getHeight();
+	int h = this->getHeight()/2-5;
 
 	SDL_Rect	r;
 
