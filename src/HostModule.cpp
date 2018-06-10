@@ -1,9 +1,11 @@
 #include "HostModule.hpp"
+#include "CPU.hpp"
 #include <unistd.h>
 #include <sys/sysctl.h>
 #include <SDL2/SDL_ttf.h>
 #include <Window.hpp>
 #include <iostream>
+#include "Log.hpp"
 
 HostModule::HostModule(void)
 {
@@ -67,6 +69,23 @@ void	HostModule::drawTerm(Terminal &terminal)
 	s.resize(20);
 	s.resize(strftime(const_cast<char*>(s.c_str()), s.length(), "%H:%M:%S", localtime(&t)));
 	printText(terminal, s, (getWidth() - s.length()) / 2, 7);
+
+	printText(terminal, "RAM History:", 2, 9);
+	if (getHeight() > 12)
+	{
+		std::vector<int>	ramHistoryGraph = cpu.getRamHistory();
+		int					x, y;
+		for (int i = 0; i < getWidth(); i++)
+		{
+			x = ramHistoryGraph.size() - getWidth() + i;
+			if (x >= 0)
+				y = (ramHistoryGraph[x] * (getHeight() - 12)) / -100 + getHeight();
+			else
+				y = getHeight() + 1;
+			for (int j = y; j < getHeight() + 1; j++)
+				terminal.print(i + getX(), j + getY(), COLOR_GRAPH_RAM, ' ');
+		}
+	}
 }
 
 void	HostModule::drawWin(Window &window)
