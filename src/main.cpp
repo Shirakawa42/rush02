@@ -23,6 +23,11 @@ void	print_usage(void)
 	exit(EXIT_FAILURE);
 }
 
+void	signal_handler(void)
+{
+	exit(EXIT_SUCCESS);
+}
+
 void	clean_exit(void)
 {
 	if (term)
@@ -35,7 +40,6 @@ void	clean_exit(void)
 		delete window;
 		window = NULL;
 	}
-	exit(EXIT_SUCCESS);
 }
 
 void	addModule(IMonitorModule *module)
@@ -129,8 +133,8 @@ int		main(int argc, char **argv)
 	std::cout << "Max memory: " << cpu.getMemorySize() / 1000000 << " Mb" << std::endl;
 
 	atexit(&clean_exit);
-	signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
-	signal(SIGHUP, reinterpret_cast<void (*)(int)>(&clean_exit));
+	signal(SIGINT, reinterpret_cast<void (*)(int)>(&signal_handler));
+	signal(SIGHUP, reinterpret_cast<void (*)(int)>(&signal_handler));
 	if (argc == 1)
 		terminal();
 	else if (argc == 2)
