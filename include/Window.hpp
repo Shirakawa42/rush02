@@ -20,7 +20,6 @@ class	Window : virtual public IMonitorDisplay
 
 		SDL_Renderer *getRenderer(void);
 		SDL_Window *getWindow(void);
-		SDL_Surface *getSurface(void);
 		void	draw(const IMonitorModule &module);
 		void	render(void);
 		void	writeText(int x,int y, std::string text, SDL_Color color);
@@ -29,7 +28,6 @@ class	Window : virtual public IMonitorDisplay
 		SDL_Color 		grey;
 	private:
 		SDL_Window		*window;
-		SDL_Surface		*surface;
 		SDL_Renderer	*renderer;
 		TTF_Font 		*font;
 		void			init_colors(void);

@@ -22,8 +22,7 @@ Window::Window(void)
 		if (window == NULL) {
 			std::cout << "Could not create window:" << SDL_GetError() << std::endl;
 		}
-		this->surface = SDL_GetWindowSurface(this->window);
-		this->renderer = SDL_CreateSoftwareRenderer(this->surface);
+		this->renderer = SDL_CreateRenderer(this->window, -1, 0);
 		SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
 }
 
@@ -40,7 +39,6 @@ Window::~Window(void)
 Window	&Window::operator=(const Window &rhs)
 {
 	this->window = rhs.window;
-	this->surface = rhs.surface;
 	this->renderer = rhs.renderer;
 	return (*this);
 }
@@ -76,10 +74,6 @@ SDL_Renderer *Window::getRenderer(void)
 SDL_Window *Window::getWindow(void)
 {
 	return (this->window);
-}
-SDL_Surface *Window::getSurface(void)
-{
-	return (this->surface);
 }
 
 void	Window::writeText(int x, int y, std::string text, SDL_Color color)

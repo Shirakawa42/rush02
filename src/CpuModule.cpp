@@ -127,6 +127,7 @@ void	CpuModule::drawWin(Window &window) const
 	}
 	SDL_RenderDrawLines(window.getRenderer(), list, cpuHistoryGraph.size());
 
+	window.writeText(50, 50, "test", window.white);
 
 	SDL_RenderPresent(window.getRenderer());
 }
