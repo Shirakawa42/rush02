@@ -31,7 +31,7 @@ Window::Window(const Window &b)
 
 Window::~Window(void)
 {
-	SDL_DestroyWindow(this->window);
+	//SDL_DestroyWindow(this->window);
 }
 
 Window	&Window::operator=(const Window &rhs)
