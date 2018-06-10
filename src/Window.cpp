@@ -15,8 +15,8 @@ Window::Window(void)
 		"ft_gkrellm",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		1920,
-		1080,
+		1350,
+		830,
 		SDL_WINDOW_OPENGL
 		);
 		if (window == NULL) {
