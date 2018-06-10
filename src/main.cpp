@@ -106,8 +106,8 @@ void	windowed(void)
 {
 
 	window = new Window();
-	modules.push_back(new CpuModule(50,50,600,550));
-	modules.push_back(new HostModule(50,600,600,550));
+	modules.push_back(new CpuModule(50,50,1820,477));
+	modules.push_back(new HostModule(50,980,1820,477));
 
 	while (true)
 	{
