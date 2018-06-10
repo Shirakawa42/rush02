@@ -6,14 +6,14 @@
 #    By: pribault <pribault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/09 10:39:10 by pribault          #+#    #+#              #
-#    Updated: 2018/06/09 17:17:47 by pribault         ###   ########.fr        #
+#    Updated: 2018/06/10 18:36:38 by lvasseur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # **************************************************************************** #
 
 NAME =	ft_gkrellm
 CC =	clang++
-FLAGS =	-Wall -Wextra -Werror -std=c++98
+FLAGS =	-Wall -Wextra -Werror -std=c++98 -Wold-style-cast
 
 SRC_DIR =	src
 OBJ_DIR =	.obj

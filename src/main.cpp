@@ -104,6 +104,7 @@ SDL_Event e;
 
 void	windowed(void)
 {
+	SDL_Surface *image = SDL_LoadBMP("norminet.bmp");
 
 	window = new Window();
 	modules.push_back(new CpuModule(50,50,600,550));
@@ -113,6 +114,11 @@ void	windowed(void)
 	while (true)
 	{
 		SDL_RenderClear(window->getRenderer());
+		SDL_Texture* texture1 = SDL_CreateTextureFromSurface(window->getRenderer(), image);
+		SDL_RenderCopy(window->getRenderer(), texture1, NULL, NULL);
+
+
+
 		for (size_t i = 0; i < modules.size(); i++)
 			window->draw(*modules[i]);
 		SDL_RenderPresent(window->getRenderer());
@@ -126,6 +132,7 @@ void	windowed(void)
 				exit(0);
 			}
 		}
+		SDL_DestroyTexture(texture1);
 		SDL_Delay(1000);
 	}
 }

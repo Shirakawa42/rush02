@@ -32,7 +32,7 @@ float	CPU::CalculateCPULoad(unsigned long long idleTicks, unsigned long long tot
 {
 	unsigned long long totalTicksSinceLastTime = totalTicks - _previousTotalTicks;
 	unsigned long long idleTicksSinceLastTime  = idleTicks - _previousIdleTicks;
-	float ret = 1.0f - ((totalTicksSinceLastTime > 0) ? ((float)idleTicksSinceLastTime) / totalTicksSinceLastTime : 0);
+	float ret = 1.0f - ((totalTicksSinceLastTime > 0) ? (static_cast<float>(idleTicksSinceLastTime)) / totalTicksSinceLastTime : 0);
 	_previousTotalTicks = totalTicks;
 	_previousIdleTicks  = idleTicks;
 	return ret;
@@ -42,7 +42,7 @@ float	CPU::GetCPULoad()
 {
 	host_cpu_load_info_data_t cpuinfo;
 	mach_msg_type_number_t count = HOST_CPU_LOAD_INFO_COUNT;
-	if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count) == KERN_SUCCESS)
+	if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, reinterpret_cast<host_info_t>(&cpuinfo), &count) == KERN_SUCCESS)
 	{
 		unsigned long long totalTicks = 0;
 		for(int i=0; i<CPU_STATE_MAX; i++) totalTicks += cpuinfo.cpu_ticks[i];
@@ -104,7 +104,7 @@ void		CPU::setUsedMemory(void)
     count = sizeof(vm_stats) / sizeof(natural_t);
     if (KERN_SUCCESS == host_page_size(mach_port, &page_size) &&
         KERN_SUCCESS == host_statistics64(mach_port, HOST_VM_INFO,
-                                        (host_info64_t)&vm_stats, &count))
+                                        reinterpret_cast<host_info64_t>(&vm_stats), &count))
     {;
         long long usedMemory = (vm_stats.active_count +
                                  vm_stats.inactive_count +
