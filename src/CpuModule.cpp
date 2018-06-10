@@ -44,6 +44,7 @@ void	CpuModule::drawTerm(Terminal &terminal)
 	static struct timeval	prev;
 	static size_t			refresh_time = 500000;
 	static float			prev_usage = 0;
+	static size_t			prev_used_memory = 0;
 	struct timeval			now;
 	std::string				s;
 
@@ -63,19 +64,20 @@ void	CpuModule::drawTerm(Terminal &terminal)
 		(now.tv_usec - prev.tv_usec)) >= refresh_time)
 	{
 		prev_usage = cpu.getCurrentUsage();
+		prev_used_memory = cpu.getUsedMemory();
 		prev = now;
 	}
 	s.append(std::to_string(prev_usage));
 	printText(terminal, s, 2, 6);
 	s = "RAM: ";
-	if ((cpu.getUsedMemory() / (1 << 30)) % 1024)
-		s.append(std::to_string((cpu.getUsedMemory() / (1 << 30)) % 1024)).append(" Go ");
-	if ((cpu.getUsedMemory() / (1 << 20)) % 1024)
-		s.append(std::to_string((cpu.getUsedMemory() / (1 << 20)) % 1024)).append(" Mo ");
-	if ((cpu.getUsedMemory() / (1 << 10)) % 1024)
-		s.append(std::to_string((cpu.getUsedMemory() / (1 << 10)) % 1024)).append(" Ko ");
-	if (cpu.getUsedMemory() % 1024)
-		s.append(std::to_string(cpu.getUsedMemory() % 1024)).append(" bytes");
+	if ((prev_used_memory / (1 << 30)) % 1024)
+		s.append(std::to_string((prev_used_memory / (1 << 30)) % 1024)).append(" Go ");
+	if ((prev_used_memory / (1 << 20)) % 1024)
+		s.append(std::to_string((prev_used_memory / (1 << 20)) % 1024)).append(" Mo ");
+	if ((prev_used_memory / (1 << 10)) % 1024)
+		s.append(std::to_string((prev_used_memory / (1 << 10)) % 1024)).append(" Ko ");
+	if (prev_used_memory % 1024)
+		s.append(std::to_string(prev_used_memory % 1024)).append(" bytes");
 	s.append(" / ");
 	if ((cpu.getMemorySize() / (1 << 30)) % 1024)
 		s.append(std::to_string((cpu.getMemorySize() / (1 << 30)) % 1024)).append(" Go ");
