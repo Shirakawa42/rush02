@@ -68,10 +68,14 @@ void	CpuModule::drawTerm(Terminal &terminal) const
 	s.append(std::to_string(prev_usage));
 	printText(terminal, s, 2, 6);
 	s = "RAM: ";
-	s.append(std::to_string((cpu.getMemorySize() / (1 << 30)) % 1024)).append(" Go ");
-	s.append(std::to_string((cpu.getMemorySize() / (1 << 20)) % 1024)).append(" Mo ");
-	s.append(std::to_string((cpu.getMemorySize() / (1 << 10)) % 1024)).append(" Ko ");
-	s.append(std::to_string(cpu.getMemorySize() % 1024)).append(" bytes");
+	if ((cpu.getMemorySize() / (1 << 30)) % 1024)
+		s.append(std::to_string((cpu.getMemorySize() / (1 << 30)) % 1024)).append(" Go ");
+	if ((cpu.getMemorySize() / (1 << 20)) % 1024)
+		s.append(std::to_string((cpu.getMemorySize() / (1 << 20)) % 1024)).append(" Mo ");
+	if ((cpu.getMemorySize() / (1 << 10)) % 1024)
+		s.append(std::to_string((cpu.getMemorySize() / (1 << 10)) % 1024)).append(" Ko ");
+	if (cpu.getMemorySize() % 1024)
+		s.append(std::to_string(cpu.getMemorySize() % 1024)).append(" bytes");
 	printText(terminal, s, 2, 7);
 }
 

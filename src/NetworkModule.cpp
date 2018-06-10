@@ -83,17 +83,65 @@ void	NetworkModule::drawTerm(Terminal &terminal) const
 	delete buffer;
 
 	s = "Input: ";
-	s.append(std::to_string((input / (1 << 30)) % 1024)).append(" Go ");
-	s.append(std::to_string((input / (1 << 20)) % 1024)).append(" Mo ");
-	s.append(std::to_string((input / (1 << 10)) % 1024)).append(" Ko ");
-	s.append(std::to_string(input % 1024)).append(" bytes");
+	if ((input / (1 << 30)) % 1024)
+		s.append(std::to_string((input / (1 << 30)) % 1024)).append(" Go ");
+	if ((input / (1 << 20)) % 1024)
+		s.append(std::to_string((input / (1 << 20)) % 1024)).append(" Mo ");
+	if ((input / (1 << 10)) % 1024)
+		s.append(std::to_string((input / (1 << 10)) % 1024)).append(" Ko ");
+	if (input % 1024)
+		s.append(std::to_string(input % 1024)).append(" bytes");
 	printText(terminal, s, 2, 3);
 	s = "Output: ";
-	s.append(std::to_string((output / (1 << 30)) % 1024)).append(" Go ");
-	s.append(std::to_string((output / (1 << 20)) % 1024)).append(" Mo ");
-	s.append(std::to_string((output / (1 << 10)) % 1024)).append(" Ko ");
-	s.append(std::to_string(output % 1024)).append(" bytes");
+	if ((output / (1 << 30)) % 1024)
+		s.append(std::to_string((output / (1 << 30)) % 1024)).append(" Go ");
+	if ((output / (1 << 20)) % 1024)
+		s.append(std::to_string((output / (1 << 20)) % 1024)).append(" Mo ");
+	if ((output / (1 << 10)) % 1024)
+		s.append(std::to_string((output / (1 << 10)) % 1024)).append(" Ko ");
+	if (output % 1024)
+		s.append(std::to_string(output % 1024)).append(" bytes");
 	printText(terminal, s, 2, 4);
+
+	static size_t			input_speed = 0;
+	static size_t			output_speed = 0;
+	static size_t			prev_input = 0;
+	static size_t			prev_output = 0;
+	static struct timeval	prev;
+	static size_t			refresh_rate = 1000000;
+	struct timeval			now;
+	size_t					diff;
+
+	gettimeofday(&now, NULL);
+	diff = (now.tv_sec - prev.tv_sec) * 1000000 + (now.tv_usec - prev.tv_usec);
+	if (diff >= refresh_rate)
+	{
+		input_speed = (1000000 * (input - prev_input)) / diff;
+		output_speed = (1000000 * (output - prev_output)) / diff;
+		prev_input = input;
+		prev_output = output;
+		prev = now;
+	}
+	s = "Input speed: ";
+	if ((input_speed / (1 << 30)) % 1024)
+		s.append(std::to_string((input_speed / (1 << 30)) % 1024)).append(" Go ");
+	if ((input_speed / (1 << 20)) % 1024)
+		s.append(std::to_string((input_speed / (1 << 20)) % 1024)).append(" Mo ");
+	if ((input_speed / (1 << 10)) % 1024)
+		s.append(std::to_string((input_speed / (1 << 10)) % 1024)).append(" Ko ");
+	if (input_speed % 1024)
+		s.append(std::to_string(input_speed % 1024)).append(" bytes");
+	printText(terminal, s, 2, 6);
+	s = "Output speed: ";
+	if ((output_speed / (1 << 30)) % 1024)
+		s.append(std::to_string((output_speed / (1 << 30)) % 1024)).append(" Go ");
+	if ((output_speed / (1 << 20)) % 1024)
+		s.append(std::to_string((output_speed / (1 << 20)) % 1024)).append(" Mo ");
+	if ((output_speed / (1 << 10)) % 1024)
+		s.append(std::to_string((output_speed / (1 << 10)) % 1024)).append(" Ko ");
+	if (output_speed % 1024)
+		s.append(std::to_string(output_speed % 1024)).append(" bytes");
+	printText(terminal, s, 2, 7);
 }
 
 void	NetworkModule::drawWin(Window &window) const
