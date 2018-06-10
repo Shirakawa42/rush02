@@ -16,6 +16,8 @@ class	CpuModule : public IMonitorModule
 
 		void	drawTerm(Terminal &terminal);
 		void	drawWin(Window &window);
+		void	drawRAM(Window &window);
+
 	private:
 };
 

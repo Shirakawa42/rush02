@@ -68,6 +68,15 @@ void	CpuModule::drawTerm(Terminal &terminal)
 	s.append(std::to_string(prev_usage));
 	printText(terminal, s, 2, 6);
 	s = "RAM: ";
+	if ((cpu.getUsedMemory() / (1 << 30)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 30)) % 1024)).append(" Go ");
+	if ((cpu.getUsedMemory() / (1 << 20)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 20)) % 1024)).append(" Mo ");
+	if ((cpu.getUsedMemory() / (1 << 10)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 10)) % 1024)).append(" Ko ");
+	if (cpu.getUsedMemory() % 1024)
+		s.append(std::to_string(cpu.getUsedMemory() % 1024)).append(" bytes");
+	s.append(" / ");
 	if ((cpu.getMemorySize() / (1 << 30)) % 1024)
 		s.append(std::to_string((cpu.getMemorySize() / (1 << 30)) % 1024)).append(" Go ");
 	if ((cpu.getMemorySize() / (1 << 20)) % 1024)
@@ -77,6 +86,23 @@ void	CpuModule::drawTerm(Terminal &terminal)
 	if (cpu.getMemorySize() % 1024)
 		s.append(std::to_string(cpu.getMemorySize() % 1024)).append(" bytes");
 	printText(terminal, s, 2, 7);
+
+	printText(terminal, "CPU History:", 2, 9);
+	if (getHeight() > 12)
+	{
+		std::vector<int>	cpuHistoryGraph = cpu.getHistory();
+		int					x, y;
+		for (int i = 0; i < getWidth(); i++)
+		{
+			x = cpuHistoryGraph.size() - getWidth() + i;
+			if (x >= 0)
+				y = (cpuHistoryGraph[x] * (getHeight() - 12)) / -100 + getHeight();
+			else
+				y = getHeight() + 1;
+			for (int j = y; j < getHeight() + 1; j++)
+				terminal.print(i + getX(), j + getY(), COLOR_GRAPH_CPU, ' ');
+		}
+	}
 }
 
 double remap(double value, double low1, double high1, double low2, double high2)
@@ -85,13 +111,13 @@ double remap(double value, double low1, double high1, double low2, double high2)
 }
 
 
-
 void	CpuModule::drawWin(Window &window)
+
 {
 	int x = this->getX();
 	int y = this->getY();
 	int w = this->getWidth();
-	int h = this->getHeight();
+	int h = this->getHeight()/2;
 
 	SDL_Rect	r;
 
@@ -99,8 +125,7 @@ void	CpuModule::drawWin(Window &window)
 	r.y = y;
 	r.w = w;
 	r.h = h;
-	//TTF_Font *font = TTF_OpenFont("font.ttf", 16);
-	double cpuUsage = cpu.getCurrentUsage(); // anti segfault car tabl size= 0
+	double cpuUsage = cpu.getCurrentUsage();
 	std::vector<int> cpuHistoryGraph = cpu.getHistory();
 	int currentPercantage = cpuHistoryGraph[cpuHistoryGraph.size()-1];
 	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
@@ -141,7 +166,53 @@ void	CpuModule::drawWin(Window &window)
 	window.writeText(x+10, y+10, std::string("CPU usage: ") + std::to_string(static_cast<int>(cpuUsage)) + '%', window.white);
 	window.writeText(x+10, y+30, std::string("Number of cores : ") + std::to_string(cpu.getNumberOfCores()) , window.white);
 	window.writeText(x+10, y+50, std::string("CPU Name: ") + cpu.getName() , window.white);
-	window.writeText(x+10, y+70, std::string("Used Memory: ") + std::to_string(cpu.getUsedMemory()), window.white);
+	drawRAM(window);
+}
+
+void	CpuModule::drawRAM(Window &window)
+{
+	int x = this->getX();
+	int y = this->getY() + this->getHeight()/2+5;
+	int w = this->getWidth();
+	int h = this->getHeight()/2-5;
+
+	SDL_Rect	r;
+
+	r.x = x;
+	r.y = y;
+	r.w = w;
+	r.h = h;
+	size_t ram = cpu.getUsedMemory();
+	std::vector<int> ramHistoryGraph = cpu.getRamHistory();
+	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
+	SDL_RenderFillRect(window.getRenderer(), &r);
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 47, 85, 101, 255);
+
+	int i0 = 50;
+	
+	while (i0 < w)
+	{
+		SDL_RenderDrawLine(window.getRenderer(), x + i0, y, x + i0, y+h);
+		i0 += 50;
+	}
+	SDL_SetRenderDrawColor(window.getRenderer(), 57, 104, 123, 255);
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 78, 142, 168, 255);
+	size_t i = 0;
+	SDL_Point list[ ramHistoryGraph.size()];
+	while (i < ramHistoryGraph.size())
+	{
+		double realx = remap(static_cast<double>(i), static_cast<double>(0), static_cast<double>(99), static_cast<double>(0), static_cast<double>(w) );
+		double realy = remap(static_cast<double>(100-ramHistoryGraph[i]), static_cast<double>(0), static_cast<double>(100), static_cast<double>(0), static_cast<double>(h) );
+		list[i].x = x + realx;
+		list[i].y = y + realy;
+		i++;
+	}
+	SDL_RenderDrawLines(window.getRenderer(), list, ramHistoryGraph.size());
+
+
+	window.writeText(x+10, y+10, std::string("Used Memory: ") + std::to_string(ram / 1024 / 1024) + std::string(" Mb"), window.white);
 
 }
 

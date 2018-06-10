@@ -30,6 +30,7 @@ class	CPU
 		size_t		getMemorySize(void);
 		size_t		getUsedMemory(void);
 		std::vector<int> const	&getHistory(void) const;
+		std::vector<int> const	&getRamHistory(void) const;
 
 
 	private:
@@ -43,6 +44,7 @@ class	CPU
 		size_t				_number_of_cores;
 		size_t				_memory_size;
 		std::vector<int>	_freqHistory; // history of total cpu usage
+		std::vector<int>	_ramHistory;
 		size_t				_used_memory;
 };
 

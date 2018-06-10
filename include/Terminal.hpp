@@ -3,10 +3,12 @@
 
 # include <string>
 
-# define COLOR_RESET	0
-# define COLOR_GREY		8
-# define COLOR_CYAN2	9
-# define COLOR_BOX		1
+# define COLOR_RESET		0
+# define COLOR_GREY			8
+# define COLOR_CYAN2		9
+# define COLOR_GREEN2		10
+# define COLOR_BOX			1
+# define COLOR_GRAPH_CPU	2
 
 typedef struct		s_color
 {
