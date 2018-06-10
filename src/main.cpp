@@ -99,7 +99,9 @@ SDL_Event e;
 
 void	windowed(void)
 {
+
 	window = new Window();
+	modules.push_back(new CpuModule());
 
 	while (true)
 	{
@@ -110,9 +112,9 @@ void	windowed(void)
 		{
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
 			{
-			/*	SDL_DestroyRenderer(window->getRenderer());
+				SDL_DestroyRenderer(window->getRenderer());
 				SDL_DestroyWindow(window->getWindow());
-				SDL_Quit();*/
+				SDL_Quit();
 				exit(0);
 			}
 		}

@@ -51,7 +51,7 @@ void Window::draw(const IMonitorModule &module)
 
 void Window::render(void)
 {
-	
+
 }
 
 SDL_Renderer *Window::getRenderer(void)
