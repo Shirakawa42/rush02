@@ -15,7 +15,7 @@ class	CpuModule : public IMonitorModule
 		CpuModule	&operator=(const CpuModule &b);
 
 		void	drawTerm(Terminal &terminal);
-		void	drawWin(Window &window) const;
+		void	drawWin(Window &window);
 	private:
 };
 

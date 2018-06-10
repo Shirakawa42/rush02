@@ -69,7 +69,7 @@ void	HostModule::drawTerm(Terminal &terminal)
 	printText(terminal, s, (getWidth() - s.length()) / 2, 7);
 }
 
-void	HostModule::drawWin(Window &window) const
+void	HostModule::drawWin(Window &window)
 {
 	int x = this->getX();
 	int y = this->getY();

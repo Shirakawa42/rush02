@@ -41,7 +41,7 @@ void	IMonitorModule::drawTerm(Terminal &terminal)
 			terminal.print(x, y, COLOR_RESET, 'O');
 }
 
-void	IMonitorModule::drawWin(Window &window) const
+void	IMonitorModule::drawWin(Window &window)
 {
 	(void)window;
 }

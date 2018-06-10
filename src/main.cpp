@@ -108,7 +108,7 @@ void	windowed(void)
 	window = new Window();
 	modules.push_back(new CpuModule(50,50,600,550));
 	modules.push_back(new HostModule(50,600,600,550));
-
+	modules.push_back(new NetworkModule(700,50,600,550));
 	while (true)
 	{
 		SDL_RenderClear(window->getRenderer());
