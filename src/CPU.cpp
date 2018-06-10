@@ -106,7 +106,7 @@ void		CPU::setUsedMemory(void)
         KERN_SUCCESS == host_statistics64(mach_port, HOST_VM_INFO,
                                         (host_info64_t)&vm_stats, &count))
     {;
-        long long usedMemory = (vm_stat	s.active_count +
+        long long usedMemory = (vm_stats.active_count +
                                  vm_stats.inactive_count +
                                  vm_stats.wire_count) *  page_size;
         _used_memory = usedMemory;
