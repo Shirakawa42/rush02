@@ -16,6 +16,7 @@ NetworkModule::NetworkModule(void)
 	prev_input = 0;
 	prev_output = 0;
 	refresh_rate = 1000000;
+	prev = (struct timeval){0, 0};
 	this->_speedHistory.reserve(100);
 	this->_speedHistory2.reserve(100);
 }
