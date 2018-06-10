@@ -7,12 +7,15 @@
 #include "IMonitorModule.hpp"
 #include "Log.hpp"
 #include "Terminal.hpp"
-#include "Window.hpp"
+#include <Window.hpp>
 #include <iomanip>
 #include <unistd.h>
 
 TerminalMonitor					*term = NULL;
+Window *window;
+
 std::vector<IMonitorModule*>	modules;
+
 
 void	print_usage(void)
 {
@@ -26,6 +29,11 @@ void	clean_exit(void)
 	{
 		delete term;
 		term = NULL;
+	}
+	if (window)
+	{
+		delete window;
+		window = NULL;
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -89,6 +97,7 @@ void	terminal(void)
 
 void	windowed(void)
 {
+	window = new Window();
 }
 
 int		main(int argc, char **argv)

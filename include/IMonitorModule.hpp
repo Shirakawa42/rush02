@@ -2,7 +2,10 @@
 # define I_MONITOR_MODULE_HPP
 
 # include "Terminal.hpp"
-# include "Window.hpp"
+//# include "Window.hpp"
+
+
+class Window;
 
 class	IMonitorModule
 {
