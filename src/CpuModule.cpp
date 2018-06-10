@@ -1,6 +1,10 @@
 #include "CpuModule.hpp"
 #include "Log.hpp"
 #include <iostream>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <vector>
+#include <Window.hpp>
 
 CpuModule::CpuModule(void)
 {
@@ -54,7 +58,68 @@ void	CpuModule::drawTerm(Terminal &terminal) const
 	printText(terminal, s, 2, 6);
 }
 
+double remap(double value, double low1, double high1, double low2, double high2)
+{
+	return (low2 + (value - low1) * (high2 - low2) / (high1 - low1));
+}
+
+
+
 void	CpuModule::drawWin(Window &window) const
 {
-	(void)window;
+	int x = this->getX();
+	int y = this->getY();
+	int w = this->getWidth();
+	int h = this->getHeight();
+
+	SDL_Rect	r;
+
+	r.x = x;
+	r.y = y;
+	r.w = w;
+	r.h = h;
+	//TTF_Font *font = TTF_OpenFont("font.ttf", 16);
+
+	std::vector<int> cpuHistoryGraph = cpu.getHistory();
+
+	
+	int currentPercantage = cpuHistoryGraph[cpuHistoryGraph.size()-1];
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 52, 62, 77, 255);
+	SDL_RenderFillRect(window.getRenderer(), &r);
+
+	SDL_Rect	r2;
+	int offset = remap(static_cast<double>(100-currentPercantage), static_cast<double>(0), static_cast<double>(100), static_cast<double>(0), static_cast<double>(h) );
+	r2.x = x;
+	r2.y = y + offset;
+	r2.w = w;
+	r2.h = h  - offset;
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 47, 85, 101, 255);
+	int i0 = 50;
+	while (i0 < w)
+	{
+		SDL_RenderDrawLine(window.getRenderer(), x + i0, y, x + i0, y+h);
+		i0 += 50;
+	}
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 57, 104, 123, 255);
+	SDL_RenderFillRect(window.getRenderer(), &r2);
+
+	SDL_SetRenderDrawColor(window.getRenderer(), 78, 142, 168, 255);
+	size_t i = 0;
+	SDL_Point list[ cpuHistoryGraph.size()];
+	while (i < cpuHistoryGraph.size())
+	{
+		double realx = remap(static_cast<double>(i), static_cast<double>(0), static_cast<double>(99), static_cast<double>(0), static_cast<double>(w) );
+		double realy = remap(static_cast<double>(100-cpuHistoryGraph[i]), static_cast<double>(0), static_cast<double>(100), static_cast<double>(0), static_cast<double>(h) );
+		list[i].x = x + realx;
+		list[i].y = y + realy;
+		i++;
+	}
+	SDL_RenderDrawLines(window.getRenderer(), list, cpuHistoryGraph.size());
+
+
+	SDL_RenderPresent(window.getRenderer());
 }
+

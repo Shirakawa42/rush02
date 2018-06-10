@@ -84,10 +84,27 @@ void	terminal(void)
 	}
 }
 
+SDL_Event e;
+
 void	windowed(void)
 {
 	window = new Window();
-	while ()
+	while (true)
+	{
+		SDL_RenderClear(window->getRenderer());
+		for (size_t i = 0; i < modules.size(); i++)
+			window->draw(*modules[i]);
+		while (SDL_PollEvent(&e))
+		{
+			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+			{
+				SDL_DestroyRenderer(window->getRenderer());
+				SDL_DestroyWindow(window->getWindow());
+				SDL_Quit();
+				exit(0);
+			}
+		}
+	}
 
 }
 

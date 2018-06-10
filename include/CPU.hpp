@@ -9,7 +9,7 @@
 #include <mach/mach_host.h>
 #include <mach/vm_map.h>
 #include <sys/sysctl.h>
-
+#include <vector>
 class	CPU
 {
 	public:
@@ -29,6 +29,8 @@ class	CPU
 		float		getCurrentUsage(void);
 		size_t		getNumberOfCores(void);
 		size_t		getMemorySize(void);
+		std::vector<int> const	&getHistory(void) const;
+
 
 	private:
 		float				CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
@@ -41,6 +43,8 @@ class	CPU
 		float				_current_usage;
 		size_t				_number_of_cores;
 		size_t				_memory_size;
+		std::vector<int>	_freqHistory; // history of total cpu usage
+
 };
 
 extern CPU	cpu;

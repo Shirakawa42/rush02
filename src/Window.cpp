@@ -42,3 +42,28 @@ Window	&Window::operator=(const Window &rhs)
 	return (*this);
 }
 
+
+void Window::draw(const IMonitorModule &module)
+{
+	module.drawWin(*this);
+}
+
+
+void Window::render(void)
+{
+	
+}
+
+SDL_Renderer *Window::getRenderer(void)
+{
+	return (this->renderer);
+}
+SDL_Window *Window::getWindow(void)
+{
+	return (this->window);
+}
+SDL_Surface *Window::getSurface(void)
+{
+	return (this->surface);
+}
+

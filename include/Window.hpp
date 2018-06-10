@@ -18,7 +18,8 @@ class	Window : virtual public IMonitorDisplay
 		SDL_Renderer *getRenderer(void);
 		SDL_Window *getWindow(void);
 		SDL_Surface *getSurface(void);
-
+		void	draw(const IMonitorModule &module);
+		void	render(void);
 
 	private:
 		SDL_Window *window;

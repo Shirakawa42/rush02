@@ -9,6 +9,7 @@ CPU::CPU()
 	setMaxFrequency();
 	setNumberOfCores();
 	setMemorySize();
+	this->_freqHistory.reserve(100);
 }
 
 CPU::~CPU()
@@ -121,6 +122,9 @@ std::string	CPU::getName(void)
 float		CPU::getCurrentUsage(void)
 {
 	setCurrentUsage();
+	if (this->_freqHistory.size() == 100)
+		this->_freqHistory.erase(this->_freqHistory.begin());
+	_freqHistory.push_back(this->_current_usage);
 	return _current_usage;
 }
 
@@ -128,3 +132,10 @@ size_t		CPU::getNumberOfCores(void)
 {
 	return _number_of_cores;
 }
+
+std::vector<int> const			&CPU::getHistory(void) const
+{
+	return (_freqHistory);
+}
+
+
