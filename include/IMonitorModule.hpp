@@ -13,7 +13,7 @@ class	IMonitorModule
 		IMonitorModule(void);
 		IMonitorModule(const IMonitorModule &b);
 		IMonitorModule(int x, int y, int width, int height);
-		~IMonitorModule(void);
+		virtual	~IMonitorModule(void);
 
 		virtual	IMonitorModule	&operator=(const IMonitorModule &b);
 

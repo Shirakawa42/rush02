@@ -11,7 +11,7 @@ class	Window : virtual public IMonitorDisplay
 	public:
 		Window(void);
 		Window(const Window &b);
-		~Window(void);
+		virtual ~Window(void);
 
 		Window	&operator=(const Window &b);
 

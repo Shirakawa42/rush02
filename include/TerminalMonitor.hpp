@@ -9,7 +9,7 @@ class	TerminalMonitor : virtual public IMonitorDisplay
 	public:
 		TerminalMonitor(void);
 		TerminalMonitor(const TerminalMonitor &b);
-		~TerminalMonitor(void);
+		virtual	~TerminalMonitor(void);
 
 		IMonitorDisplay	&operator=(const IMonitorDisplay &b);
 

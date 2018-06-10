@@ -5,6 +5,7 @@
 # include "TerminalMonitor.hpp"
 # include "Window.hpp"
 # include "CpuModule.hpp"
+# include "NetworkModule.hpp"
 
 # define FPS	60
 

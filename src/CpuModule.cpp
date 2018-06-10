@@ -41,7 +41,11 @@ CpuModule	&CpuModule::operator=(const CpuModule &b)
 
 void	CpuModule::drawTerm(Terminal &terminal) const
 {
-	std::string	s;
+	static struct timeval	prev;
+	static size_t			refresh_time = 500000;
+	static float			prev_usage = 0;
+	struct timeval			now;
+	std::string				s;
 
 	printText(terminal, "CPU", (getWidth() - 3) / 2, 1);
 	s = "Name: ";
@@ -54,7 +58,14 @@ void	CpuModule::drawTerm(Terminal &terminal) const
 	s.append(std::to_string(cpu.getNumberOfCores()));
 	printText(terminal, s, 2, 5);
 	s = "Usage: ";
-	s.append(std::to_string(cpu.getCurrentUsage()));
+	gettimeofday(&now, NULL);
+	if (static_cast<size_t>((now.tv_sec - prev.tv_sec) * 1000000 +
+		(now.tv_usec - prev.tv_usec)) >= refresh_time)
+	{
+		prev_usage = cpu.getCurrentUsage();
+		prev = now;
+	}
+	s.append(std::to_string(prev_usage));
 	printText(terminal, s, 2, 6);
 }
 

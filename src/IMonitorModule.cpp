@@ -50,11 +50,13 @@ void	IMonitorModule::printText(Terminal &terminal, const std::string &s, int x, 
 {
 	std::string	out;
 
-	if (x >= 0 && x < _width &&
-		y >= 0 && y < _height)
+	x += _x;
+	y += _y;
+	if (x >= _x && x < _width + _x &&
+		y >= _y && y < _height + _y)
 	{
 		out = s;
-		if (x + static_cast<int>(s.length()) > _width)
+		if (x + static_cast<int>(s.length()) > _width + _x)
 		{
 			out.resize(_width - y);
 			if (out.length() <= 3)
