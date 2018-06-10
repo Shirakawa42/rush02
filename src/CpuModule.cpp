@@ -68,6 +68,15 @@ void	CpuModule::drawTerm(Terminal &terminal)
 	s.append(std::to_string(prev_usage));
 	printText(terminal, s, 2, 6);
 	s = "RAM: ";
+	if ((cpu.getUsedMemory() / (1 << 30)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 30)) % 1024)).append(" Go ");
+	if ((cpu.getUsedMemory() / (1 << 20)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 20)) % 1024)).append(" Mo ");
+	if ((cpu.getUsedMemory() / (1 << 10)) % 1024)
+		s.append(std::to_string((cpu.getUsedMemory() / (1 << 10)) % 1024)).append(" Ko ");
+	if (cpu.getUsedMemory() % 1024)
+		s.append(std::to_string(cpu.getUsedMemory() % 1024)).append(" bytes");
+	s.append(" / ");
 	if ((cpu.getMemorySize() / (1 << 30)) % 1024)
 		s.append(std::to_string((cpu.getMemorySize() / (1 << 30)) % 1024)).append(" Go ");
 	if ((cpu.getMemorySize() / (1 << 20)) % 1024)
