@@ -1,4 +1,6 @@
 #include "TerminalMonitor.hpp"
+#include <iostream>
+#include "Log.hpp"
 
 TerminalMonitor::TerminalMonitor(void)
 {

@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <unistd.h>
 
-TerminalMonitor					term;
+TerminalMonitor					*term = NULL;
 std::vector<IMonitorModule*>	modules;
 
 void	print_usage(void)
@@ -22,6 +22,11 @@ void	print_usage(void)
 
 void	clean_exit(void)
 {
+	if (term)
+	{
+		delete term;
+		term = NULL;
+	}
 	exit(EXIT_SUCCESS);
 }
 
@@ -29,8 +34,8 @@ void	addModule(IMonitorModule *module)
 {
 	static int	n = 2;
 	static int	i = 0;
-	int			width = term.getTerm().getWidth();
-	int			height = term.getTerm().getHeight();
+	int			width = term->getTerm().getWidth();
+	int			height = term->getTerm().getHeight();
 
 	if (width < height * 2)
 	{
@@ -54,15 +59,16 @@ void	terminal(void)
 	struct timeval	start, end, prev;
 	size_t			us;
 
+	term = new TerminalMonitor();
 	addModule(new CpuModule());
-	addModule(new CpuModule());
+	addModule(new NetworkModule());
 	while (true)
 	{
 		gettimeofday(&start, NULL);
 		manage_term_inputs();
 		for (size_t i = 0; i < modules.size(); i++)
-			term.draw(*modules[i]);
-		term.render();
+			term->draw(*modules[i]);
+		term->render();
 		gettimeofday(&end, NULL);
 		us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
 		if (us < 1000000 / FPS)
@@ -87,8 +93,6 @@ void	windowed(void)
 
 int		main(int argc, char **argv)
 {
-	CPU		cpu = CPU();
-
 	std::cout << "Max Frequency: " << std::fixed << std::setprecision(2) <<
 		static_cast<float>(cpu.getMaxFrequency()) / 1000000000.0f << " GHz"<< std::endl;
 	std::cout << "Current Frequency: " << std::fixed << std::setprecision(2) <<
@@ -96,9 +100,9 @@ int		main(int argc, char **argv)
 	std::cout << "Number of cores: " << cpu.getNumberOfCores() << " Cores" << std::endl;
 	std::cout << "Max memory: " << cpu.getMemorySize() / 1000000 << " Mb" << std::endl;
 
-	TerminalMonitor	term;
-
+	atexit(&clean_exit);
 	signal(SIGINT, reinterpret_cast<void (*)(int)>(&clean_exit));
+	signal(SIGHUP, reinterpret_cast<void (*)(int)>(&clean_exit));
 	if (argc == 1)
 		terminal();
 	else if (argc == 2)
